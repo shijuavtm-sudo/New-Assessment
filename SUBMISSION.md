@@ -2,7 +2,7 @@
 
 - **Name:** SHIJU A
 - **Date submitted:** 14-11-2026
-- **Repository link:** 
+- **Repository link:** https://github.com/shijuavtm-sudo/New-Assessment
 - **Total time spent (real time):** 3 hour
 
 > Replies below are drafts written on the **exercise clock** (Monday 16 November 2026, Asia/Dubai). Keep your real time in the time log at the end. Put screenshots, log excerpts and query output in `evidence/` and link to them.
