@@ -16,41 +16,134 @@
 ## Incident 1 — `inbox/01-oasis-builders-upload-stuck.md`
 ### Acknowledgement
 
-- **Sent at (exercise clock):**
+- **Sent at (exercise clock):** 9.10 AM
 - **Reply:**
+   Dear Rashid,
+  
+     Thank you for contacting Invoicely Lite Support.
+  
+     We understand the urgency of this issue, particularly during your month-end closing process.
+  
+     We apologise for the inconvenience caused by the upload remaining in Processing and the subsequent document number       already exists errors.
+  
+     We are investigating your three upload attempts to determine which invoices have been successfully processed and         sent to the ASP.
+  
+     Please do not attempt another upload or retry the same file until we complete our investigation. This will help          prevent additional duplicate submissions.
 
+    We will check the processing records and invoice statuses and provide you with a clear update on which invoices          were successfully submitted and how to safely process the remaining invoices.
+
+  Kind regards,
+
+  Invoicely Lite Support Team
 > …
-
+  
 ### Priority and justification
 
-- **Priority:**
+- **Priority:** P1
 - **Why:**
+- The customer uploaded the same monthly invoice file three times.
+- The portal remained stuck on Processing.
+- The frontend returned a 504 Gateway Timeout.
+- Each upload contained 600 rows and 8 invoices.
+- Processing took approximately 121 seconds per batch.
+- Duplicate document-number errors appeared after repeated uploads.
+- The customer cannot identify which invoices were successfully submitted.
+- Month-end closing and customer invoice issuance are affected.
+   
 - **SLA deadlines I am working to:**
+- First response: 09:10 AM .
+- Next update: To be confirmed using docs/escalation-policy.md.
+- Resolution target: To be confirmed using docs/escalation-policy.md.
 
 ### Investigation log
 
+
 | Time (exercise clock) | What I checked / did | What I found |
 |---|---|---|
-| | | |
+|9.05|Reviewed the customer support email |Customer reported three upload attempts, Processing delays and duplicate document-number errors. |
+|investigation | Replayed the Oasis Builders scenario using make replay CUSTOMER=oasis. | Docker successfully created the tools container and initiated the Excel upload. |
+| investigation | Observed the frontend upload response. | The frontend returned HTTP 504 Gateway Timeout. |
+| investigation | Compared batch details and Reviewed the Batches page. | Each batch contained 600 rows and 8 invoices and Found three Oasis Builders uploads of the same November file. |
+| investigation | Reviewed application logs and Api log | Observed HTTP 200 responses from the ASP with response durations of a few milliseconds. |
+| pending | Inspected timeout and duplicate-handling code. | Exact source-code location and technical cause still need confirmation. |
 
 ### Root cause
 
-- **What happened:**
+- **What happened:** Oasis Builders uploaded the same 600-row November Excel file three times. Each upload contained eight invoices and took approximately 121 seconds to process.
+
+  The frontend returned a 504 Gateway Timeout, while API logs showed successful HTTP 200 responses and ASP logs showed successful HTTP 200 responses.
+
+  The customer subsequently encountered document number already exists errors and could not determine which invoices had been submitted successfully.
+
 - **Where** (component, `file:line`):
+- Suspected components:
+  - Frontend upload and request-handling process.
+  - Backend invoice import and processing service.
+  - Invoice duplicate-detection and retry-handling logic.
+  
 - **Why it happens:**
+  The likely explanation is that processing the large 600-row file takes longer than the frontend or gateway timeout.
+
+  The frontend stops waiting and returns a 504 response, but the backend may continue processing the upload.
+
+  The customer retries the same file because the first attempt appears unsuccessful. Existing invoice records may then
+  trigger duplicate document-number errors.
+
+  The exact relationship between the timeout, backend processing and duplicate detection requires further verification.
+
+
 - **Evidence:**
+ - Oasis Builders Batches page showing three upload attempts.
+  - Each batch contains 600 rows and 8 invoices.
+  - Processing time approximately 121 seconds per batch.
+  - Frontend response: 504 Gateway Timeout.
+  - API logs showing HTTP 200 responses.
+  - ASP response logs showing HTTP 200 responses.
+  - Grafana Invoicely Lite Overview dashboard showing API activity, import processing and ASP submission metrics.
+ 
 - **Confidence and open questions:**
+  High confidence that the Oasis uploads experienced unusually long processing times and the frontend returned a 504 Gateway Timeout.
+
+  The likely cause is a long-running synchronous upload combined with unsafe retry handling.
 
 ### Customer resolution reply OR escalation note
 
 - **Which one and why:**
-
+Customer update. The issue affects invoice issuance and month-end closing. The technical investigation is not complete, so an update is more appropriate than claiming a confirmed resolution.
 > …
+Dear Rashid,
+> 
+We have started investigating your November invoice uploads.
+
+Our initial checks identified three upload batches containing the same 600-row file. Each batch took approximately 121 seconds to process, and the frontend returned a 504 Gateway Timeout.
+
+We also observed successful API and ASP responses during the processing period. However, we are still checking the individual invoice records to establish exactly which invoices were successfully submitted.
+
+Please do not upload the same file again until we complete this verification.
+
+We will provide you with a breakdown of successfully submitted, rejected and unprocessed invoices, together with the recommended steps to process any remaining invoices safely.
+
+We apologise for the inconvenience and understand the importance of resolving this before your month-end closing.
+
+Kind regards,
+
+Invoice Lite Support Team
 
 ### Workaround offered
-
+- Do not retry the original file while the investigation is ongoing.
+- Preserve the original Excel file for reconciliation.
+- Check the status of every invoice in the three upload batches.
+- Identify invoices already accepted by the ASP.
+- Process only invoices confirmed as not submitted, using a verified safe retry procedure.
+- Avoid manually changing document numbers or creating replacement invoices without reconciliation.
 ### Prevention ideas
-
+- Implement asynchronous invoice processing so large uploads do not depend on a single long-running HTTP request.
+- Introduce idempotency keys to prevent duplicate processing when customers retry uploads.
+- Improve frontend progress indicators and provide clear batch-processing statuses.
+- Implement safe retry functionality for failed or interrupted uploads.
+- Add monitoring and alerts for uploads exceeding expected processing times.
+- Provide an invoice-level reconciliation report showing accepted, rejected and pending invoices.
+- Add automated tests for large Excel uploads and repeated submission attempts.
 ---
 
 ## Incident 2 — `inbox/02-alert-api-restarted-marina-bay.md`
