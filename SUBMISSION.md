@@ -39,7 +39,7 @@
   
 ### Priority and justification
 
-- **Priority:** P1
+- **Priority:** P2
 - **Why:**
 - The customer uploaded the same monthly invoice file three times.
 - The portal remained stuck on Processing.
@@ -150,42 +150,131 @@ Invoice Lite Support Team
 
 ### Acknowledgement
 
-- **Sent at (exercise clock):**
-- **Sent to:**
-- **Reply:**
-
+- **Sent at (exercise clock):** 9.40 AM
+- **Sent to:**  support-oncall@invoicely-lite.example
+- **Reply:**   
 > …
+> Hi Priya,
+
+Thank you for flagging this issue.
+
+We have received the critical alert indicating that the Invoicely API restarted three times within 15 minutes.
+
+We are treating this as a high-priority production incident because multiple customers are reporting intermittent 502 
+Bad Gateway errors and some invoices are remaining in Validated status.
+
+Our team is investigating the API restart events, application logs and invoice-processing pipeline to identify the cause and assess the impact.
+
+We will also review the readiness of the service for Marina Bay Hospitality's scheduled go-live on 18 November.
+
+Please share any additional customer reports or affected invoice references with us.
+We will keep you updated as the investigation progresses.
+
+Kind regards,
+
+Lite Support Team
+
 
 ### Priority and justification
 
-- **Priority:**
+- **Priority:** P1
 - **Why:**
+ - Because the production API restarted three times within 15 minutes.
+ - Grafana generated a critical alert.
+ - Multiple customers reported intermittent 502 Bad Gateway errors.
+ - Some invoices have been stuck in Validated status since approximately 09:30 AM.
+ - The problem may affect multiple customers and the invoice-processing pipeline.
+ - Marina Bay Hospitality has an upcoming production go-live on 18 November.
+ - The incident requires immediate technical investigation and coordination with engineering and Customer Success.
+
 - **SLA deadlines I am working to:**
+ - First response: Target 09:55 AM, following the 09:42 AM alert.
+ - Next update: According to the P1 update interval in docs/escalation-policy.md.
+ - Resolution target: According to the P1 resolution target in docs/escalation-policy.md.
 
 ### Investigation log
 
 | Time (exercise clock) | What I checked / did | What I found |
 |---|---|---|
-| | | |
+| 09:42 | Reviewed the Grafana alert email.| Critical alert reported three API restarts within 15 minutes. |
+| 09.48 | Reviewed priya nair's escalation message | Multiple customers reported intermittent 502 errors |
+| 09.48 | Reviewed the reported invoice-processing issue. | Some invoices had remained in Validated status since approximately 09:30 AM. |
+| 09.50 | Reviewed the upcoming customer go-live information. | Marina Bay Hospitality was scheduled to go live on Wednesday, 18 November. |
+| pending | Checked Docker container status and restart counts. |  identified whether the API container is currently stable. |
+| pending | Inspected API logs around the restart timestamps. |  identified the reason for the restarts. |
+| pending | Checked Grafana API availability, latency and error-rate panels. | identified to correlate API failures with the restart events. |
+| pending | Reviewed application resource usage. | identified the memory, CPU and database connectivity issue. |
+
 
 ### Root cause
 
-- **What happened:**
-- **Where** (component, `file:line`):
-- **Why it happens:**
-- **Evidence:**
-- **Confidence and open questions:**
+- **What happened:** Grafana generated a critical production alert because the Invoicely API restarted three times within 15 minutes.
 
+  At approximately the same time, multiple customers experienced intermittent 502 Bad Gateway errors, and some invoices remained in Validated status without progressing.
+
+- **Where** (component, `file:line`): Affected component: Invoicely API container and its invoice-processing dependencies.
+
+  Exact source-code file and line number have not yet been identified.
+
+- **Why it happens:** The API container experienced repeated restarts, potentially interrupting requests and invoice-processing operations.
+
+  Possible causes include application crashes, memory exhaustion, unhandled exceptions, database connectivity problems or container health-check failures.
+
+  These are investigation hypotheses. The actual restart reason must be established from Docker and application logs.
+
+
+- **Evidence:**
+  - Grafana alert email showing `restarts=3`.
+  - Alert severity: critical.
+  - Environment: production.
+  - Service: api.
+  - Priya Nair's escalation reporting intermittent 502 errors.
+  - Report of invoices stuck in Validated status since approximately 09:30 AM.
+  - Grafana Invoicely Lite Overview dashboard.
+  - 
+- **Confidence and open questions:**
+ - High confidence that the API experienced repeated restarts and customers reported production errors.
+ - The root cause of the restarts and the relationship between the restarts and stuck invoices remain unconfirmed.
+   **open question**
+   1. Why did the API container restart three times?
+   2. Was the container terminated because of an out-of-memory event?
+   3. Is api stable now? 
 ### Customer resolution reply OR escalation note
 
 - **Which one and why:**
-
+   Internal engineering escalation. This is a critical production incident affecting multiple customers, so engineering
+   investigation and coordinated incident ownership are required.
+  **Escalation note:**
+  **Title:** P1 — Production Invoicely API restarting repeatedly, intermittent 502 errors.
+  **Affected service:** Invoicely API.
+  **Environment:** Production.
+  **Alert:** Three API restarts within 15 minutes.
 > …
+ **Customer Success update:**
+   Hi Priya,
 
+>   We have raised this as a high-priority production incident with engineering.
+    The team is investigating the repeated API restarts and their impact on invoice processing.
+    We will verify service stability and review the remaining Validated invoices before providing a readiness update for     Marina Bay Hospitality.
+    We will keep you informed as soon as we have confirmed findings.
+
+   Kind regards,
+
+   Invoicely Lite Support Team
+   
 ### Workaround offered
-
+   - Avoid repeatedly retrying invoice uploads while the API is unstable.
+   - Record the affected invoice references and batch IDs.
+   - Check invoice statuses before attempting resubmission.
+   - Verify ASP submission status before retrying invoices.
+   - 
 ### Prevention ideas
-
+   1. Investigate and resolve the underlying API restart cause.
+   2. Introduce improved application crash monitoring.
+   3. Monitor container memory and CPU usage.
+   4. Improve API health checks and restart alerts.
+   5. Implement reliable background invoice-processing workers.
+   6. Add automatic recovery for interrupted invoice-processing jobs.
 ---
 
 ## Incident 3 — `inbox/03-al-noor-fuel-br-co-15.md`
