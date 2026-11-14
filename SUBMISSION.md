@@ -2,15 +2,23 @@
 
 - **Name:** SHIJU A
 - **Date submitted:** 14-11-2026
-- **Repository link:**
-- **Total time spent (real time):**
+- **Repository link:** 
+- **Total time spent (real time):** 3 hour
 
 > Replies below are drafts written on the **exercise clock** (Monday 16 November 2026, Asia/Dubai). Keep your real time in the time log at the end. Put screenshots, log excerpts and query output in `evidence/` and link to them.
 
 > **Required:** the Acknowledgement and Priority sections for **all five** items, and the full write-up (investigation log onwards) for **at least three** items of your choice. For an item you did not fully investigate, replace the remaining sections with "Not investigated — what I would check next: …".
 
 - **Items I fully investigated, and why I chose them:**
-   - 
+   
+    1. Oasis Builders: I chose this incident because repeated uploads caused timeout and duplicate invoice errors. I checked the batches, processing times and available logs to understand what happened and identify the possible cause.
+   
+    2. API Restart — Marina Bay Hospitality: I chose this incident because the API restarted three times within 15 minutes, and multiple customers reported 502 errors. I reviewed the Grafana alert and customer escalation to understand the impact on invoice processing.
+
+    3. Al Noor Fuel & Lubricants: I chose this incident because three out of six invoices were rejected due to the BR-CO-15 validation error. I checked the batch results and identified the affected invoices.
+
+ I selected these incidents because they provided useful evidence to understand different technical issues and their customer impact. Some technical root causes still need further verification.
+ 
 ---
 
 ## Incident 1 — `inbox/01-oasis-builders-upload-stuck.md`
