@@ -14,6 +14,88 @@
 ---
 
 ## Incident 1 — `inbox/01-oasis-builders-upload-stuck.md`
+### Acknowledgement
+
+- **Sent at (exercise clock):**
+- **Reply:**
+
+> …
+
+### Priority and justification
+
+- **Priority:**
+- **Why:**
+- **SLA deadlines I am working to:**
+
+### Investigation log
+
+| Time (exercise clock) | What I checked / did | What I found |
+|---|---|---|
+| | | |
+
+### Root cause
+
+- **What happened:**
+- **Where** (component, `file:line`):
+- **Why it happens:**
+- **Evidence:**
+- **Confidence and open questions:**
+
+### Customer resolution reply OR escalation note
+
+- **Which one and why:**
+
+> …
+
+### Workaround offered
+
+### Prevention ideas
+
+---
+
+## Incident 2 — `inbox/02-alert-api-restarted-marina-bay.md`
+
+### Acknowledgement
+
+- **Sent at (exercise clock):**
+- **Sent to:**
+- **Reply:**
+
+> …
+
+### Priority and justification
+
+- **Priority:**
+- **Why:**
+- **SLA deadlines I am working to:**
+
+### Investigation log
+
+| Time (exercise clock) | What I checked / did | What I found |
+|---|---|---|
+| | | |
+
+### Root cause
+
+- **What happened:**
+- **Where** (component, `file:line`):
+- **Why it happens:**
+- **Evidence:**
+- **Confidence and open questions:**
+
+### Customer resolution reply OR escalation note
+
+- **Which one and why:**
+
+> …
+
+### Workaround offered
+
+### Prevention ideas
+
+---
+
+## Incident 3 — `inbox/03-al-noor-fuel-br-co-15.md`
 
 ### Acknowledgement
 
@@ -117,88 +199,6 @@ Invoicely Lite Support Team
 - Validate the relationship between IBT-109, IBT-110 and IBT-112 before sending invoices to the ASP.
 - Add automated tests for VAT calculations and rounding edge cases.
 - Improve error reporting to identify the exact invoice and calculation causing validation failure.
----
-
-## Incident 2 — `inbox/02-alert-api-restarted-marina-bay.md`
-
-### Acknowledgement
-
-- **Sent at (exercise clock):**
-- **Sent to:**
-- **Reply:**
-
-> …
-
-### Priority and justification
-
-- **Priority:**
-- **Why:**
-- **SLA deadlines I am working to:**
-
-### Investigation log
-
-| Time (exercise clock) | What I checked / did | What I found |
-|---|---|---|
-| | | |
-
-### Root cause
-
-- **What happened:**
-- **Where** (component, `file:line`):
-- **Why it happens:**
-- **Evidence:**
-- **Confidence and open questions:**
-
-### Customer resolution reply OR escalation note
-
-- **Which one and why:**
-
-> …
-
-### Workaround offered
-
-### Prevention ideas
-
----
-
-## Incident 3 — `inbox/03-al-noor-fuel-br-co-15.md`
-
-### Acknowledgement
-
-- **Sent at (exercise clock):**
-- **Reply:**
-
-> …
-
-### Priority and justification
-
-- **Priority:**
-- **Why:**
-- **SLA deadlines I am working to:**
-
-### Investigation log
-
-| Time (exercise clock) | What I checked / did | What I found |
-|---|---|---|
-| | | |
-
-### Root cause
-
-- **What happened:**
-- **Where** (component, `file:line`):
-- **Why it happens:**
-- **Evidence:**
-- **Confidence and open questions:**
-
-### Customer resolution reply OR escalation note
-
-- **Which one and why:**
-
-> …
-
-### Workaround offered
-
-### Prevention ideas
 
 ---
 
