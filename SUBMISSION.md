@@ -53,29 +53,70 @@ Invoicely Lite Support Team
 | Time (exercise clock) | What I checked / did | What I found |
 |---|---|---|
 | 10.20 |Acknowledged the customer's report |Confirmed that the issue concerns BR-CO-15 validation failures. |
+| 10:25 |Opened the Al Noor Fuel batch in the portal. | The batch contained six invoices and showed Completed status. |
+| 10.27 | Reviewed individual invoice statuses | Three invoices were accepted and three were rejected. |
+| 10.30 | Reviewed the rejection details in the portal and Identified rejected invoice numbers. | Each rejected invoice showed one error and no ASP reference and  this invoices ANF-2611-0042, ANF-2611-0044 and ANF-2611-0046 were rejected by the ASP |
+| 10.40 | Compare accepted and rejected invoice totals using database queries. |  Further evidence required |
 
-Include dead ends and hypotheses you ruled out.
+Include dead ends and hypotheses you ruled out
 
 ### Root cause
 
-- **What happened:**
-- **Where** (component, `file:line`):
-- **Why it happens:**
-- **Evidence** (Grafana panels or queries, log lines, database queries, code references — link to `evidence/`):
-- **Confidence and open questions:**
+- **What happened:**  Three invoices from Al Noor Fuel's November upload were rejected with BR-CO-15. This validation rule requires the invoice total including VAT (IBT-112) to equal the total excluding VAT (IBT-109) plus the total VAT amount (IBT-110).
+- **Where** (component, `file:line`):Not confirmed yet. The invoice calculation, XML generation and ASP validation components need to be inspected.
 
+- **Why it happens:** The exact technical reason has not yet been established. Possible areas to investigate include VAT calculation, decimal precision, rounding and invoice total generation
+
+  
+- **Evidence** (Grafana panels or queries, log lines, database queries, code references — link to `evidence/`):
+-  1. Portal screenshot: 
+   2. Batch status: Completed.
+   3. Invoice count: Six.
+   4. Accepted invoices: Three.
+   5. Rejected invoices: Three.
+   6. Rejected invoice numbers: ANF-2611-0042, ANF-2611-0044 and ANF-2611-0046.
+   7. ASP rejection reason: BR-CO-15.
+   
+- **Confidence and open questions:**
+     High confidence that the three invoices failed the BR-CO-15 validation reported by the customer and shown in the   portal.
+
+  The underlying calculation or data-processing cause is not yet confirmed. Further investigation is required before recommending any correction
+  
 ### Customer resolution reply OR escalation note
 
 - **Which one and why:**
-
+Customer update. The investigation is not complete, so I should not provide an unverified technical explanation or escalate without sufficient evidence.
 > …
+**Reply:**
+
+Dear Fatima,
+
+We have reviewed your November invoice batch.
+
+Our initial investigation confirms that three of the six invoices were accepted, while three were rejected with BR-CO-15 validation errors.
+
+We are now examining the VAT calculations and invoice validation process to identify the reason for the difference.
+At this stage, we cannot confirm that any changes to your original figures are required.
+Please continue to retain the original invoice file and avoid resubmitting the rejected invoices until we confirm the appropriate next step.
+We will share a further update once our technical investigation is complete.
+
+Kind regards,
+
+Invoicely Lite Support Team
 
 (For an escalation, use the template in [docs/escalation-policy.md](docs/escalation-policy.md). If you escalate, also include the update you send the customer.)
 
 ### Workaround offered
-
+- Keep the original Excel file unchanged for audit purposes.
+- Avoid repeatedly uploading the rejected invoices.
+- Do not manually change VAT amounts without confirming the calculation discrepancy.
+- Once the cause is identified, provide corrected invoice data or a verified reprocessing option, as appropriate
 ### Prevention ideas
-
+- Use accurate decimal arithmetic for VAT calculations.
+- Apply consistent rounding rules during invoice generation.
+- Validate the relationship between IBT-109, IBT-110 and IBT-112 before sending invoices to the ASP.
+- Add automated tests for VAT calculations and rounding edge cases.
+- Improve error reporting to identify the exact invoice and calculation causing validation failure.
 ---
 
 ## Incident 2 — `inbox/02-alert-api-restarted-marina-bay.md`
