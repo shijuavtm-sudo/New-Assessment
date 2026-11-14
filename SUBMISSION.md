@@ -3,7 +3,7 @@
 - **Name:** SHIJU A
 - **Date submitted:** 14-11-2026
 - **Repository link:** https://github.com/shijuavtm-sudo/New-Assessment
-- **Total time spent (real time):** 3 hour
+- **Total time spent (real time):** Approximately 3 hour
 
 > Replies below are drafts written on the **exercise clock** (Monday 16 November 2026, Asia/Dubai). Keep your real time in the time log at the end. Put screenshots, log excerpts and query output in `evidence/` and link to them.
 
@@ -478,20 +478,36 @@ Invoicely Lite Support Team
 
 ### Prioritisation
 
+
+I gave the highest priority to Incident 2 because the API restarted three times and multiple customers experienced 502 errors. It could affect the entire production service.
+
+My next priority was Incident 1 because repeated uploads caused timeouts and duplicate invoice errors, affecting the customer's month-end work.
+
+Incident 3 was my third priority because VAT validation failures affected invoice submissions and the customer's audit process.
+
+I prioritised the remaining incidents based on their urgency and customer impact. I focused first on issues that could affect multiple customers or interrupt important business operations.
+
 The order in which you worked the five items, and why. Did you change your mind as you learned more?
 
 ### What I would do differently
+
+I would check the escalation policy and system logs earlier. I would also collect screenshots and database evidence during each investigation instead of doing it later. This would help me identify root causes faster and provide more accurate updates.
 
 ### What I learned / what I would need to learn
 
 Be specific: concepts, tools or parts of the system that were new to you, how you got up to speed, and what you would study next.
 
+ I learned how to investigate API errors, container restarts, gateway timeouts and invoice validation failures.
+ I also gained practical experience with Docker Compose, Grafana, API logs and batch processing.
+
 ### Time log (real time)
 
 | Date | From–to | What I worked on |
 |---|---|---|
-| | | |
+|14-11-2026 | Approximately 3 hours | Reviewed the assessment, investigated incidents, checked application logs and dashboards, and prepared the submission. |
 
 ### AI usage disclosure
 
-Which tools you used (or "none"), what for, and how you checked their output against the system.
+I used ChatGPT to understand technical issues, organise investigation findings, Readme file creation and Api issues. 
+I learned how to solve root cause error
+
