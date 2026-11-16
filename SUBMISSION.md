@@ -489,7 +489,12 @@ Invoicely Lite Support Team
  - Rejected invoices: 4.
  - Validation error: got '13/11/2026'.
  - Expected format: YYYY-MM-DD.
- - Screenshot of the completed batch : 
+ - Screenshot of the completed batch :
+ - Error
+   ![Error Page](evidence/Screenshot_2026-11-15-06-40-32-558_com.android.chrome.jpg)
+ - Corrected Page
+   ![ct](evidence/Screenshot_2026-11-15-07-06-35-043_com.android.chrome.jpg) 
+    
 
 - **Confidence and open questions:**
 High confidence that the four invoices were rejected because of the date-format validation error.
