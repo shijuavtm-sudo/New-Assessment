@@ -397,8 +397,9 @@ Invoicely Lite Support Team
 
 ### Acknowledgement
 
-- **Sent at (exercise clock):**
+- **Sent at (exercise clock):** 12.10 PM
 - **Reply:**
+   Dear 
 
 > …
 
