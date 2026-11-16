@@ -11,7 +11,7 @@
 
 - **Items I fully investigated, and why I chose them:**
    
-    1. Oasis Builders: I chose this incident because repeated uploads caused timeout and duplicate invoice errors. I checked the batches, processing times and available logs to understand what happened and identify the possible cause.
+    1. Oasis Builders upload stuck : I chose this incident because repeated uploads caused timeout and duplicate invoice errors. I checked the batches, processing times and available logs to understand what happened and identify the possible cause.
    
     2. API Restart — Marina Bay Hospitality: I chose this incident because the API restarted three times within 15 minutes, and multiple customers reported 502 errors. I reviewed the Grafana alert and customer escalation to understand the impact on invoice processing.
 
@@ -136,7 +136,7 @@ We apologise for the inconvenience and understand the importance of resolving th
 
 Kind regards,
 
-Invoice Lite Support Team
+Invoicely Lite Support Team
 
 ### Workaround offered
 - Do not retry the original file while the investigation is ongoing.
@@ -159,7 +159,7 @@ Invoice Lite Support Team
 
 ### Acknowledgement
 
-- **Sent at (exercise clock):** 9.40 AM
+- **Sent at (exercise clock):** 10 AM
 - **Sent to:**  support-oncall@invoicely-lite.example
 - **Reply:**   
 > …
@@ -181,7 +181,7 @@ We will keep you updated as the investigation progresses.
 
 Kind regards,
 
-Lite Support Team
+Invoicely Lite Support Team
 
 
 ### Priority and justification
@@ -191,13 +191,13 @@ Lite Support Team
  - Because the production API restarted three times within 15 minutes.
  - Grafana generated a critical alert.
  - Multiple customers reported intermittent 502 Bad Gateway errors.
- - Some invoices have been stuck in Validated status since approximately 09:30 AM.
+ - Some invoices have been stuck in Validated status since approximately 09:45 AM.
  - The problem may affect multiple customers and the invoice-processing pipeline.
  - Marina Bay Hospitality has an upcoming production go-live on 18 November.
  - The incident requires immediate technical investigation and coordination with engineering and Customer Success.
 
 - **SLA deadlines I am working to:**
- - First response: Target 09:55 AM, following the 09:42 AM alert.
+ - First response: Target 10 AM, following the 09:42 AM alert.
  - Next update: According to the P1 update interval in docs/escalation-policy.md.
  - Resolution target: According to the P1 resolution target in docs/escalation-policy.md.
 
@@ -238,7 +238,7 @@ Lite Support Team
   - Environment: production.
   - Service: api.
   - Priya Nair's escalation reporting intermittent 502 errors.
-  - Report of invoices stuck in Validated status since approximately 09:30 AM.
+  - Report of invoices stuck in Validated status since approximately 09:42 AM.
   - Grafana Invoicely Lite Overview dashboard.
   - 
 - **Confidence and open questions:**
@@ -397,9 +397,9 @@ Invoicely Lite Support Team
 
 ### Acknowledgement
 
-- **Sent at (exercise clock):** 12.10 PM
+- **Sent at (exercise clock):** 
 - **Reply:**
-   Dear 
+   
 
 > …
 
@@ -439,41 +439,90 @@ Invoicely Lite Support Team
 
 ### Acknowledgement
 
-- **Sent at (exercise clock):** 
+- **Sent at (exercise clock):** 12.15 PM
 - **Reply:**
+   Dear Hessa Al Ketbi,
+  Thank you for contacting Invoicely Life Support.
+  We understand your frustration, especially when all your invoices have been rejected and your customers are waiting for them.
+  We reviewed the error message and confirmed that the date you entered, 13/11) 2026,represents a valid calendar date.However, our system expects dates in YYYY-MM-DD format.
+  We are investigating the date-format validation in the excel import process to understand why commonly used date formats are not accepted.
+  As a temporary workaround, please use YYYY-MM-DD format for invoice issue dates.
+  We apologies for the inconvenience and will provide an update on our findings.
+
+King regards, 
+
+Invoicely Lite Support Team
 
 > …
 
 ### Priority and justification
 
-- **Priority:**
-- **Why:**
+- **Priority:** P4
+- **Why:** The all invoices were rejected due to date format issue. The customer cannot issue invoices to their customers. The issue affects an entire customer batch. so the customer requires assistance to continue invoices processing.
+  
 - **SLA deadlines I am working to:**
-
+  - First Response: 12.15 PM
+  - Next Update: 12.30 PM
 ### Investigation log
 
 | Time (exercise clock) | What I checked / did | What I found |
 |---|---|---|
-| | | |
+| 12.15 | Reviewed customer email| Customer reported that all invoices were rejected |
+| 12.18 | Reviewed the batch in the portal | Batch contained 8 rows and 4 ininvoices
+| 12.20 | Checked batch processing resluts| All 4 invoices were rejected |
+| 12.25 | Reviewed grafana it showed the validation error and Reviewed Validation error| System expected YYYY-MM-DD but received 13/11/2026.|
+| 12.25 | Reviewed the validation behavior and Sql Schema | The application rejected the date representation rather than establishing that the calender date was invalid. |
+
 
 ### Root cause
 
-- **What happened:**
-- **Where** (component, `file:line`):
-- **Why it happens:**
+- **What happened:** All four invoices in Ghaf Tree Cafe November batch were rejected because the invoice issue date did not match the format expected by the application. 
+- **Where** (component, `file:line`): Invoice excel important and date-validation process.Exact error was in excel file date format.
+  
+- **Why it happens:** The application execpts dates in YYYY-MM-DD format,but the customer supplied the date in DD/MM/YYYY format.
+  
 - **Evidence:**
-- **Confidence and open questions:**
+ - Customer email reporting the issue.
+ - Batch: ghaf-cafe-nov-2026.xlsx.
+ - Source rows: 8.
+ - Total invoices: 4.
+ - Rejected invoices: 4.
+ - Validation error: got '13/11/2026'.
+ - Expected format: YYYY-MM-DD.
+ - Screenshot of the completed batch : 
 
+- **Confidence and open questions:**
+High confidence that the four invoices were rejected because of the date-format validation error.
+Further investigation is required to establish the exact validation code location and whether Excel-native date values are also affected.
 ### Customer resolution reply OR escalation note
 
-- **Which one and why:**
+Dear Hessa Al Ketbi,
 
-> …
+We have reviewed your November invoice batch and identified the date-format validation issue.
+
+All four invoices were rejected because the system expects the invoice issue date in YYYY-MM-DD format.
+
+Your date, 13/11/2026, is valid. The corresponding date in our required format is 2026-11-13.
+
+As a temporary workaround, please update the date format to YYYY-MM-DD before uploading the file again.
+
+We apologise for the inconvenience and appreciate your patience.
+
+Kind regards,
+
+Invoicely Lite Support Team
+
 
 ### Workaround offered
-
+ - Convert dates from DD-MM-YYYY to YYYY-MM-DD or YYYY/MM/DD.
+ - Verify the corrected dates before uploading. 
+ - Check the invoice statuses before resubmission to avoid duplicate invoices.
+   
 ### Prevention ideas
-
+- Support commonly used date formats during Excel imports.
+- Automatically normalize valid dates into YYYY-MM-DD.
+- Provide clear validation messages with examples.
+  
 ---
 
 ## Overall
