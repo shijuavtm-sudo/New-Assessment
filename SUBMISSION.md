@@ -16,6 +16,7 @@
     2. API Restart — Marina Bay Hospitality: I chose this incident because the API restarted three times within 15 minutes, and multiple customers reported 502 errors. I reviewed the Grafana alert and customer escalation to understand the impact on invoice processing.
 
     3. Al Noor Fuel & Lubricants: I chose this incident because three out of six invoices were rejected due to the BR-CO-15 validation error. I checked the batch results and identified the affected invoices.
+    4. Ghaf Tree Cafe : I selected this incident because all four invoices in the attached workbook were blocked by date-format validation. To resolve this, I reviewed the workbook values and traced the portal’s validation path to distinguish between a valid calendar date and a supported input format.
 
  I selected these incidents because they provided useful evidence to understand different technical issues and their customer impact. Some technical root causes still need further verification.
  
@@ -437,7 +438,7 @@ Invoicely Lite Support Team
 
 ### Acknowledgement
 
-- **Sent at (exercise clock):**
+- **Sent at (exercise clock):** 
 - **Reply:**
 
 > …
